@@ -27,7 +27,7 @@ I like to comment mine, you don't have to.
 Copy the IP of the machine currently in the ACL. Copy the IP of the machine to be put into the ACL. In the script replace them in  `$oldIPAddress = "current_IP_in_ACL" $newIPAddress = "IP_wants_Mullvad_access"` MAKE SURE TO KEEP THE QUOTES
 
 Save the script.</br>
-Make a copy of the script with the values of  `$oldIPAddress` and `$newIPAddress` switched around, so you can switch them back.</br>
+Make a copy of the script with the values of  `$oldIPAddress` and `$newIPAddress` switched around, so you can change back and forth.</br>
 Run the script in Powershell.</br>
 If you'd like some basic logging, uncomment the lines 
 ```
