@@ -37,4 +37,7 @@ If you'd like logging, uncomment the lines
 ```
 CAVEATS:</br>
 Currently you need two versions of the script, as it's only one way. IE: I have one script that changes from my computer to my phone, and one that changes from my phone to my computer, I'll try to get a version that doesn't need two copies.
+Can only change 1 IP per script, will work on getting multiple in the same script.
 You have to restart tailscale to get it to recognize the ACL changes.
+Only powershell for now. I plan on making a bash verion and a super simple android app.
+
