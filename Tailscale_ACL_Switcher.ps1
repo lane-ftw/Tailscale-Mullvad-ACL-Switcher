@@ -1,3 +1,5 @@
+###powershell###
+
 # Set OAuth client ID and client secret
 $clientID = "your_client_id"
 $clientSecret = "your_client_secret"
