@@ -16,20 +16,20 @@ MAKE SURE YOU ALREADY HAVE DEVICES IN YOUR ACL, OR THIS SCRIPT WILL DO NOTHING. 
 I like to comment mine, you don't have to.
 
 ```
-// device 1
+// machine 1
 {"target": ["100.100.100.100"], "attr": ["mullvad"]},
-// device 2
+// machine 2
 {"target": ["101.101.101.101"], "attr": ["mullvad"]},
-// device 3
+// machine 3
 {"target": ["102.102.102.102"], "attr": ["mullvad"]},
 ```
 
-Copy the IP of the device currently in the ACL, and the ip of the device to replace the old device and in the script replace them in  `$oldIPAddress = "current_IP_in_ACL" $newIPAddress = "IP_wants_Mullvad_access"` MAKE SURE TO KEEP THE QUOTES
+Copy the IP of the machine currently in the ACL. Copy the IP of the machine to be put into the ACL. In the script replace them in  `$oldIPAddress = "current_IP_in_ACL" $newIPAddress = "IP_wants_Mullvad_access"` MAKE SURE TO KEEP THE QUOTES
 
 Save the script.</br>
-Make a copy of the script with the values of  `$oldIPAddress` and `$newIPAddress ` switched around, so you can switch them back.</br>
+Make a copy of the script with the values of  `$oldIPAddress` and `$newIPAddress` switched around, so you can switch them back.</br>
 Run the script in Powershell.</br>
-If you'd like logging, uncomment the lines 
+If you'd like some basic logging, uncomment the lines 
 ```
 #####Write-Output "Retrieved ACL policy:"
 #####Write-Output $aclPolicyResponse
