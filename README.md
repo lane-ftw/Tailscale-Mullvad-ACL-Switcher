@@ -6,7 +6,7 @@ Assumptions: You have a Mullvad subscription through Tailscale. You can create a
 HOW TO:</br>
 Download a script from ^^^ up there ^^^
 
-Go to https://login.tailscale.com/admin/machines and note the IPs of the machines you want to switch. I assume this would work with device names/MagicDNS, but haven't tried anything but IPs yet.
+Go to https://login.tailscale.com/admin/machines and note the IPs of the machines you want to switch. I assume this would work with device names/MagicDNS, but haven't tried anything other than IPs yet.
 
 Go to https://login.tailscale.com/admin/settings/oauth and create an Oauth client with at least ACL read/write access.
 
