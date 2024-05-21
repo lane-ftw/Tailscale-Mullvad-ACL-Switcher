@@ -4,7 +4,7 @@ Switches devices in your Tailscale ACL to use Mullvad nodes without having to us
 Assumptions: You have a Mullvad subscription through Tailscale. You can create an OAuth client with permissions to read/write to your tailnet's ACL. You have an ACL with entries for devices to use Mullvad exit nodes.
 
 HOW TO:
-Download a script from the releases. Currently it's just a powershell script for 1-1 changes, I'll write a bash version and an android app soon.
+Download a script. Currently it's just a powershell script for 1-1 changes, I'll write a bash version and an android app soon.
 
 Go to https://login.tailscale.com/admin/machines and note the IPs of the machines you want to switch.
 
