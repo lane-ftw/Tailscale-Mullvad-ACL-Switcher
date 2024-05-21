@@ -35,4 +35,6 @@ If you'd like logging, uncomment the lines
 #####Write-Output $aclPolicyResponse
 #####pause
 ```
+CAVEATS:
 Currently you need two versions of the script, as it's only one way. IE: I have one script that changes from my computer to my phone, and one that changes from my phone to my computer, I'll try to get a version that doesn't need two copies.
+You have to restart tailscale to get it to recognize the ACL changes.
