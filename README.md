@@ -50,7 +50,7 @@ If you'd like some basic logging, uncomment the lines:</br>
 Notes:</br>
 <s>Currently you need two versions of the script, as it's only one way. IE: I have one script that changes from my computer to my phone, and one that changes from my phone to my computer, I'll try to get a version that doesn't need two copies.</br>
 Can only change 1 IP per script, will work on getting multiple in the same script.</s></br>
-Interactive version now up!</br>
+Interactive version now up! Can set names for each pair.</br>
 You have to restart tailscale to get it to recognize the ACL changes.</br>
 Bash version needs `jq` installed to parse JSON.</br>
 Android app soon?
