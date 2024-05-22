@@ -1,10 +1,21 @@
+###POWERSHELL###
 # Set OAuth client ID and client secret
 $clientID = "your_client_ID"
 $clientSecret = "your_client_secret"
 
-# Predefined IP addresses
-$defaultIPAddress1 = "100.100.100.100"
-$defaultIPAddress2 = "101.101.101.101"
+# Define IP address pairs with names
+$ipPairs = @{
+    "1" = @{
+        Name = "OPTION 1"
+        OldIPAddress = "100.100.100.100"
+        NewIPAddress = "101.101.101.101"
+    }
+    "2" = @{
+        Name = "OPTION 2"
+        OldIPAddress = "101.101.101.101"
+        NewIPAddress = "100.100.100.100"
+    }
+}
 
 # Log start of the script
 Write-Output "Starting Tailscale ACL update script..."
@@ -34,7 +45,7 @@ function Update-ACL {
     $aclPolicyResponse = Invoke-RestMethod -Method Get -Uri "https://api.tailscale.com/api/v2/tailnet/-/acl" -Headers @{
         Authorization = "Bearer $accessToken"
     }
-#    Write-Output "ACL policy response: $($aclPolicyResponse | ConvertTo-Json)"
+    #Write-Output "ACL policy response: $($aclPolicyResponse | ConvertTo-Json)"
 
     # Modify ACL policy
     $modifiedPolicy = $aclPolicyResponse -replace $oldIP, $newIP
@@ -44,7 +55,7 @@ function Update-ACL {
         Authorization = "Bearer $accessToken"
         "Content-Type" = "application/json"
     } -Body $modifiedPolicy
-#    Write-Output "ACL update response: $($response | ConvertTo-Json)"
+    Write-Output "ACL update response: $($response | ConvertTo-Json)"
 
     # Log end of the function
     Write-Output "ACL update completed."
@@ -52,23 +63,18 @@ function Update-ACL {
 
 # Display options to the user
 Write-Output "Choose an option:"
-Write-Output "1. Use $defaultIPAddress1 as old IP and $defaultIPAddress2 as new IP"
-Write-Output "2. Use $defaultIPAddress2 as old IP and $defaultIPAddress1 as new IP"
-$choice = Read-Host "Enter your choice (1 or 2)"
+$ipPairs.GetEnumerator() | ForEach-Object {
+    Write-Output "$($_.Key). Use $($_.Value.Name) ($($_.Value.OldIPAddress) -> $($_.Value.NewIPAddress))"
+} | Sort-Object { [int] $_.Key } -Descending
+$choice = Read-Host "Enter your choice"
 
-switch ($choice) {
-    1 {
-        $oldIPAddress = $defaultIPAddress1
-        $newIPAddress = $defaultIPAddress2
-    }
-    2 {
-        $oldIPAddress = $defaultIPAddress2
-        $newIPAddress = $defaultIPAddress1
-    }
-    default {
-        Write-Output "Invalid choice. Exiting."
-        exit 1
-    }
+if ($ipPairs.ContainsKey($choice)) {
+    $selectedIPs = $ipPairs[$choice]
+    $oldIPAddress = $selectedIPs.OldIPAddress
+    $newIPAddress = $selectedIPs.NewIPAddress
+} else {
+    Write-Output "Invalid choice. Exiting."
+    exit 1
 }
 
 # Call the Update-ACL function with the chosen IP addresses
