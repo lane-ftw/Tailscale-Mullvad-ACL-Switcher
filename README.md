@@ -28,7 +28,7 @@ Copy the IP of the machine currently in the ACL. Copy the IP of the machine to b
 
 Save the script.</br>
 Make a copy of the script with the values of  `$oldIPAddress` and `$newIPAddress` switched around, so you can change back and forth.</br>
-[BASH] install `jq`
+[BASH] install `jq`</br>
 Run the script.</br>
 If you'd like some basic logging, uncomment the lines:</br>
 [POWERSHELL]
