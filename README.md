@@ -6,7 +6,7 @@ Assumptions: You have a Mullvad subscription through Tailscale. You can create a
 HOW TO:</br>
 Download a script from ^^^ up there ^^^
 
-Go to https://login.tailscale.com/admin/machines and note the IPs of the machines you want to switch. I assume this would work with device names/MagicDNS, but haven't tried anything other than IPs yet.
+Go to https://login.tailscale.com/admin/machines and note the IPs of the machines you want to switch. <s>I assume this would work with device names/MagicDNS, but haven't tried anything other than IPs yet.</s> Only works with IPV4/IPV6 addresses, Tailscale ACL limitation.   
 
 Go to https://login.tailscale.com/admin/settings/oauth and create an Oauth client with at least ACL read/write access.
 
@@ -24,20 +24,29 @@ I like to comment mine, you don't have to.
 {"target": ["102.102.102.102"], "attr": ["mullvad"]},
 ```
 
-Copy the IP of the machine currently in the ACL. Copy the IP of the machine to be put into the ACL. In the script replace them in  `$oldIPAddress = "current_IP_in_ACL" $newIPAddress = "IP_wants_Mullvad_access"` MAKE SURE TO KEEP THE QUOTES
+Copy the IP of the machine currently in the ACL. Copy the IP of the machine to be put into the ACL (wants mullvad access). In the script replace them in  `$oldIPAddress = "current_IP_in_ACL" $newIPAddress = "IP_wants_Mullvad_access"` MAKE SURE TO KEEP THE QUOTES
 
 Save the script.</br>
 Make a copy of the script with the values of  `$oldIPAddress` and `$newIPAddress` switched around, so you can change back and forth.</br>
-Run the script in Powershell.</br>
-If you'd like some basic logging, uncomment the lines 
+[BASH] install `jq`
+Run the script.</br>
+If you'd like some basic logging, uncomment the lines:</br>
+[POWERSHELL]
 ```
 #####Write-Output "Retrieved ACL policy:"
 #####Write-Output $aclPolicyResponse
 #####pause
 ```
+[BASH]
+```
+#echo "ACL policy response: $aclPolicyResponse"
+#echo "ACL update response: $response"
+#read -rp "Press Enter to continue..."
+```
+
 CAVEATS:</br>
 Currently you need two versions of the script, as it's only one way. IE: I have one script that changes from my computer to my phone, and one that changes from my phone to my computer, I'll try to get a version that doesn't need two copies.</br>
 Can only change 1 IP per script, will work on getting multiple in the same script.</br>
 You have to restart tailscale to get it to recognize the ACL changes.</br>
-Only powershell for now. I plan on making a bash verion and a super simple android app.
+Only Bash and Powershell. I plan on making a super simple android app.
 
