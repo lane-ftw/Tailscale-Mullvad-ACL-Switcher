@@ -6,21 +6,25 @@
 clientID="your_client_ID"
 clientSecret="your_client_secret"
 
-# Predefined IP addresses
-defaultIPAddress1="100.100.100.100"
-defaultIPAddress2="101.101.101.101"
+# Define IP address pairs with names
+declare -A ipPairs=(
+    [1]="OPTION 1 (100.100.100.100 -> 101.101.101.101)"
+    [2]="OPTION 2 (101.101.101.101 -> 100.100.100.100)"
+)
 
 # Log start of the script
 echo "Starting Tailscale ACL update script..."
 
-# Send request to obtain an access token
-echo "Requesting access token..."
-tokenResponse=$(curl -s -X POST -d "client_id=$clientID" -d "client_secret=$clientSecret" "https://api.tailscale.com/api/v2/oauth/token")
-echo "Token response: $tokenResponse"
+# Function to obtain an access token
+getAccessToken() {
+    echo "Requesting access token..."
+    tokenResponse=$(curl -s -X POST -d "client_id=$clientID" -d "client_secret=$clientSecret" "https://api.tailscale.com/api/v2/oauth/token")
+    echo "Token response: $tokenResponse"
 
-# Extract access token from the response
-accessToken=$(echo "$tokenResponse" | jq -r '.access_token')
-echo "Access token obtained: $accessToken"
+    # Extract access token from the response
+    accessToken=$(echo "$tokenResponse" | jq -r '.access_token')
+    echo "Access token obtained: $accessToken"
+}
 
 # Function to update ACL policy
 updateACL() {
@@ -31,39 +35,47 @@ updateACL() {
 
     # Retrieve current ACL policy
     aclPolicyResponse=$(curl -s -X GET -H "Authorization: Bearer $accessToken" "https://api.tailscale.com/api/v2/tailnet/-/acl")
-    #echo "ACL policy response: $aclPolicyResponse"
 
     # Modify ACL policy
     modifiedPolicy=$(echo "$aclPolicyResponse" | sed "s/$oldIP/$newIP/g")
 
     # Send modified ACL policy back to Tailscale
     response=$(curl -s -X POST -H "Authorization: Bearer $accessToken" -H "Content-Type: application/json" -d "$modifiedPolicy" "https://api.tailscale.com/api/v2/tailnet/-/acl")
-    #echo "ACL update response: $response"
 
     # Log end of the function
     echo "ACL update completed."
 }
 
+# Call the function to obtain an access token
+getAccessToken
+
 # Display options to the user
 echo "Choose an option:"
-echo "1. Use $defaultIPAddress1 as old IP and $defaultIPAddress2 as new IP"
-echo "2. Use $defaultIPAddress2 as old IP and $defaultIPAddress1 as new IP"
+for key in $(seq 1 ${#ipPairs[@]}); do
+    ip_pair="${ipPairs[$key]}"
+    echo "$key. ${ip_pair%)*})"  # Add the closing parenthesis
+done
+
 read -rp "Enter your choice: " choice
 
-case $choice in
-    1)
-        oldIPAddress="$defaultIPAddress1"
-        newIPAddress="$defaultIPAddress2"
-        ;;
-    2)
-        oldIPAddress="$defaultIPAddress2"
-        newIPAddress="$defaultIPAddress1"
-        ;;
-    *)
-        echo "Invalid choice. Exiting."
-        exit 1
-        ;;
-esac
+# Validate user input and set IP addresses accordingly
+if [[ -z "${ipPairs[$choice]}" ]]; then
+    echo "Invalid choice. Exiting."
+    exit 1
+fi
+
+# Extract old and new IP addresses from the chosen option
+ip_pair="${ipPairs[$choice]}"
+#echo "Selected IP pair: $ip_pair"
+# Extracting old IP address
+oldIPAddress=$(echo "$ip_pair" | awk -F '[()]|->' '{gsub(/^[ \t]+|[ \t]+$/, "", $2); print $2}')
+# Extracting new IP address
+newIPAddress=$(echo "$ip_pair" | awk -F '[()]|->' '{gsub(/^[ \t]+|[ \t]+$/, "", $3); print $3}')
+#echo "Extracted old IP: $oldIPAddress, new IP: $newIPAddress"
 
 # Call the updateACL function with the chosen IP addresses
+#echo "Calling updateACL function with old IP: $oldIPAddress and new IP: $newIPAddress"
 updateACL "$oldIPAddress" "$newIPAddress"
+
+# Pause to keep the terminal window open
+#read -rp "Press Enter to continue..."
