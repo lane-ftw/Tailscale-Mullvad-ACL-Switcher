@@ -26,7 +26,7 @@ I like to comment mine, you don't have to.
 ```
 
 <b>[NON INTERACTIVE VERSION]</b> Copy the IP of the machine currently in the ACL. Copy the IP of the machine to be put into the ACL (wants mullvad access). In the script replace them in  `$oldIPAddress = "current_IP_in_ACL" $newIPAddress = "IP_wants_Mullvad_access"` MAKE SURE TO KEEP THE QUOTES</br>
-<b>[INTERACTIVE VERSION]</b> Copy the IP of the machine currently in the ACL. Copy the IP of the machine to be put into the ACL (wants mullvad access). In the script replace them in  `defaultIPAddress1="100.100.100.100" defaultIPAddress2="101.101.101.101"` MAKE SURE TO KEEP THE QUOTES</br>
+<b>[INTERACTIVE VERSION]</b> Copy the IP of the machine currently in the ACL. Copy the IP of the machine to be put into the ACL (wants mullvad access). In the script replace them in  `    [1]="OPTION 1 (100.100.100.100 -> 101.101.101.101)" [2]="OPTION 2 (101.101.101.101 -> 100.100.100.100)"` MAKE SURE TO KEEP THE QUOTES</br>
 
 Save the script.</br>
 <b>[NON INTERACTIVE VERSION]</b> Make a copy of the script with the values of  `$oldIPAddress` and `$newIPAddress` switched around, so you can change back and forth.</br>
