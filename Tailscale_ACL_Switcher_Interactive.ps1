@@ -63,9 +63,9 @@ function Update-ACL {
 
 # Display options to the user
 Write-Output "Choose an option:"
-$ipPairs.GetEnumerator() | ForEach-Object {
+$ipPairs.GetEnumerator() | Sort-Object { [int] $_.Key } | ForEach-Object {
     Write-Output "$($_.Key). Use $($_.Value.Name) ($($_.Value.OldIPAddress) -> $($_.Value.NewIPAddress))"
-} | Sort-Object { [int] $_.Key } -Descending
+}
 $choice = Read-Host "Enter your choice"
 
 if ($ipPairs.ContainsKey($choice)) {
