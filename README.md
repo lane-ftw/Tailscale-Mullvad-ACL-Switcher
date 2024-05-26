@@ -53,5 +53,5 @@ Can only change 1 IP per script, will work on getting multiple in the same scrip
 Interactive version now up! Can set names for each pair. Should support unlimited number of pairs.</br>
 You have to restart tailscale to get it to recognize the ACL changes.</br>
 Bash version needs `jq` installed to parse JSON.</br>
-Windows users, check out [PS2EXE](https://github.com/MScholtes/TechNet-Gallery/tree/master/PS2EXE-GUI)</br>
+Windows users, check out [PS2EXE](https://github.com/MScholtes/TechNet-Gallery/tree/master/PS2EXE-GUI).</br>
 Android app soon?
