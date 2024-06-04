@@ -1,5 +1,6 @@
 # Tailscale-Mullvad-ACL-Switcher
 Switches devices in your Tailscale ACL to use Mullvad nodes without having to use the admin panel, using OAuth and the Tailscale API.
+![ACL](https://github.com/lane-ftw/Tailscale-Mullvad-ACL-Switcher/assets/80347498/c2c39082-6678-47bc-aaf0-258f31896c5e)
 
 Assumptions: You have a Mullvad subscription through Tailscale. You can create an OAuth client with permissions to read/write to your tailnet's ACL. You have an ACL with entries for devices to use Mullvad exit nodes.
 
